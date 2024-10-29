@@ -8,9 +8,45 @@
 
 [node name="Control" type="Control" parent="CanvasLayer"]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchor_right = 1.0
+anchor_bottom = 0.08
+offset_bottom = 0.159996
+grow_horizontal = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TabBar" type="TabBar" parent="CanvasLayer/Control/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/VBoxContainer/TabBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -1.0
+offset_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Button" type="Button" parent="CanvasLayer/Control/VBoxContainer/TabBar/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Ebeebee"
+
+[node name="Button2" type="Button" parent="CanvasLayer/Control/VBoxContainer/TabBar/HBoxContainer"]
+layout_mode = 2
+
+[node name="Button3" type="Button" parent="CanvasLayer/Control/VBoxContainer/TabBar/HBoxContainer"]
+layout_mode = 2
 
 [node name="Background" type="Node2D" parent="."]
 
@@ -25,5 +61,5 @@ position = Vector2(874, 282)
 texture = ExtResource("1_ijnse")
 
 [node name="BattlerAudience" type="Sprite2D" parent="Foreground"]
-position = Vector2(557, 621)
+position = Vector2(545, 566)
 texture = ExtResource("1_ijnse")
