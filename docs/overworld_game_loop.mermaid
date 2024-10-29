@@ -1,0 +1,14 @@
+stateDiagram-v2
+    [*] --> ShufflePlayerOrder
+    ShufflePlayerOrder --> SelectNextPlayer
+    SelectNextPlayer --> BeginTurn
+    BeginTurn --> PerformDiceRoll: Player Select Move
+    BeginTurn --> UseItem: Player Select Item
+    UseItem --> PerformDiceRoll
+    PerformDiceRoll --> MovePlayerNextSpace
+    MovePlayerNextSpace --> PassingSpaceEffect
+    PassingSpaceEffect --> MovePlayerNextSpace: Spaces left > 0
+    MovePlayerNextSpace --> LandingSpaceEffect: Spaces left = 0
+    LandingSpaceEffect --> EndTurn
+    EndTurn --> [*]: Win Condition Met (turn limit, gold, item, boss, last standing)
+    EndTurn --> SelectNextPlayer: Win Condition Not Met

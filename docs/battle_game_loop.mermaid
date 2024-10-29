@@ -1,0 +1,41 @@
+stateDiagram-v2
+    [*] --> DetermineBattleOrder
+
+    DetermineBattleOrder --> ShowActionUI : Player goes first
+    DetermineBattleOrder --> NPCAction : NPC goes first
+
+    SelectNextBattler --> ShowActionUI : Player turn
+    SelectNextBattler --> NPCAction : NPC turn
+    
+    ShowActionUI --> AttackEffect : Select an attack
+    ShowActionUI --> ItemEffect : Select an item
+    ShowActionUI --> RunChance : Select run
+    
+    NPCAction --> AttackEffect : NPC logic selects an attack
+    NPCAction --> ItemEffect : NPC logic selects an item
+    NPCAction --> RunChance : NPC logic selects run
+    
+    AttackEffect --> ReduceHP : Damaging attack
+    AttackEffect --> RestoreHP : Healing attack
+    AttackEffect --> OtherEffect : Other type of attack
+    
+    ReduceHP --> SideEliminated : Eliminated either all player or NPC characters
+
+    ReduceHP --> SelectNextBattler : Side not fully eliminated
+    RestoreHP --> SelectNextBattler
+    OtherEffect --> SelectNextBattler
+    
+    SideEliminated --> PlayerEliminationNotice : A player lost the battle (one or more)
+    SideEliminated --> BattleWinNotice : A player won a battle against an NPC only
+    
+    PlayerEliminationNotice --> [*] : Pass player elimination info to overworld handler
+    BattleWinNotice --> [*] : Pass updated stats and win info to overworld handler
+    
+    ItemEffect --> RestoreHP : Healing item
+    ItemEffect --> OtherEffect : Other type of item
+    ItemEffect --> SelectNextBattler
+    
+    RunChance --> RunSuccess : Run succeeds
+    RunChance --> RunFail : Run fails
+    RunSuccess --> [*] : Pass updated stats to overworld handler
+    RunFail --> SelectNextBattler

@@ -1,0 +1,13 @@
+<mxfile host="65bd71144e">
+    <diagram id="3DSa8cR48XbJn5Q70M-r" name="Page-1">
+        <mxGraphModel dx="2188" dy="1109" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="3" value="stateDiagram-v2&#10;    [*] --&gt; ShufflePlayerOrder&#10;    ShufflePlayerOrder --&gt; SelectNextPlayer&#10;    SelectNextPlayer --&gt; BeginTurn&#10;    BeginTurn --&gt; PerformDiceRoll: Player Select Move&#10;    BeginTurn --&gt; UseItem: Player Select Item&#10;    UseItem --&gt; PerformDiceRoll&#10;    PerformDiceRoll --&gt; MovePlayerNextSpace&#10;    MovePlayerNextSpace --&gt; PassingSpaceEffect&#10;    PassingSpaceEffect --&gt; MovePlayerNextSpace: Spaces left &gt; 0&#10;    MovePlayerNextSpace --&gt; LandingSpaceEffect: Spaces left = 0&#10;    LandingSpaceEffect --&gt; EndTurn&#10;    EndTurn --&gt; [*]: Win Condition Met (turn limit, gold, item, boss, last standing)&#10;    EndTurn --&gt; SelectNextPlayer: Win Condition Not Met" style="shadow=0;dashed=0;align=left;strokeWidth=1;shape=mxgraph.mermaid.abstract.mermaid;labelBackgroundColor=#ffffff;noLabel=1;" vertex="1" parent="1">
+                    <mxGeometry width="850" height="1100" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
