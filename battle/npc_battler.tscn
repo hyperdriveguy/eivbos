@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://b06w2fewg56ql"]
+
+[ext_resource type="Texture2D" uid="uid://n623w770lwdc" path="res://icon.svg" id="1_gt6nb"]
+
+[node name="NPCBattler" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_gt6nb")

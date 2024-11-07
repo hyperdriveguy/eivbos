@@ -1,0 +1,64 @@
+[gd_scene load_steps=4 format=3 uid="uid://pm402sxy7f50"]
+
+[ext_resource type="PackedScene" uid="uid://dfvmq53rsquxp" path="res://battle/player_battler/player_battler.tscn" id="1_3utks"]
+[ext_resource type="PackedScene" uid="uid://b06w2fewg56ql" path="res://battle/npc_battler.tscn" id="2_b2b16"]
+[ext_resource type="PackedScene" uid="uid://0xaxbbvg1f6n" path="res://battle/battle_audience.tscn" id="3_7uqqf"]
+
+[node name="Battle" type="Node"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="BattlerUIActions" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 68.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/BattlerUIActions"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -78.0
+offset_top = -15.5
+offset_right = 78.0
+offset_bottom = 15.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AttackButton" type="Button" parent="CanvasLayer/BattlerUIActions/HBoxContainer"]
+layout_mode = 2
+focus_neighbor_right = NodePath("../RallyButton")
+text = "Attack"
+
+[node name="RallyButton" type="Button" parent="CanvasLayer/BattlerUIActions/HBoxContainer"]
+layout_mode = 2
+focus_neighbor_left = NodePath("../AttackButton")
+text = "Rally"
+
+[node name="ItemButton" type="Button" parent="CanvasLayer/BattlerUIActions/HBoxContainer"]
+layout_mode = 2
+text = "Item"
+
+[node name="RunButton" type="Button" parent="CanvasLayer/BattlerUIActions/HBoxContainer"]
+layout_mode = 2
+text = "Run"
+
+[node name="Background" type="Node2D" parent="."]
+
+[node name="Foreground" type="Node2D" parent="."]
+
+[node name="SyncTurnManager" type="Node" parent="Foreground"]
+
+[node name="PlayerBattler" parent="Foreground/SyncTurnManager" instance=ExtResource("1_3utks")]
+position = Vector2(423, 350)
+
+[node name="NPCBattler" parent="Foreground/SyncTurnManager" instance=ExtResource("2_b2b16")]
+position = Vector2(1491, 342)
+
+[node name="BattleAudience" parent="Foreground" instance=ExtResource("3_7uqqf")]
+position = Vector2(917, 885)
