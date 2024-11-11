@@ -1,15 +1,22 @@
-[gd_scene load_steps=4 format=3 uid="uid://dfvmq53rsquxp"]
+[gd_scene load_steps=5 format=3 uid="uid://dfvmq53rsquxp"]
 
 [ext_resource type="Texture2D" uid="uid://n623w770lwdc" path="res://icon.svg" id="1_hqrjk"]
 [ext_resource type="Script" path="res://battle/player_battler/player_battler.gd" id="1_yrk1p"]
-[ext_resource type="Script" path="res://battle/player_battler/stats.gd" id="3_vyecm"]
+[ext_resource type="Script" path="res://battle/player_battler/battler_stats.gd" id="2_wul3y"]
+
+[sub_resource type="Resource" id="Resource_28h01"]
+script = ExtResource("2_wul3y")
+max_health = 10
+cur_health = 10
+strength = 5
+skill = 5
+speed = 5
+awareness = 5
+rizz = 5
 
 [node name="PlayerBattler" type="Node2D"]
 script = ExtResource("1_yrk1p")
+stats = SubResource("Resource_28h01")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_hqrjk")
-
-[node name="Stats" type="Node" parent="."]
-script = ExtResource("3_vyecm")
-health = 15
