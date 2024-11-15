@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://pm402sxy7f50"]
+[gd_scene load_steps=7 format=3 uid="uid://pm402sxy7f50"]
 
 [ext_resource type="PackedScene" uid="uid://dfvmq53rsquxp" path="res://battle/player_battler/player_battler.tscn" id="1_3utks"]
 [ext_resource type="Script" path="res://battle/sync_turn_manager.gd" id="1_3wcxc"]
+[ext_resource type="Script" path="res://battle/battle.gd" id="1_v0ng5"]
 [ext_resource type="PackedScene" uid="uid://0xaxbbvg1f6n" path="res://battle/battle_audience.tscn" id="3_7uqqf"]
 [ext_resource type="Script" path="res://battle/player_battler/battler_stats.gd" id="3_vqfke"]
 
@@ -16,6 +17,7 @@ awareness = 5
 rizz = 5
 
 [node name="Battle" type="Node"]
+script = ExtResource("1_v0ng5")
 
 [node name="UI" type="CanvasLayer" parent="."]
 
