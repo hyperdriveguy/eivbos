@@ -25,7 +25,7 @@ func _ready() -> void:
 	input = DeviceInput.new(player_input_id)
 	print("rizz: ", temporary_stats.rizz)
 	_refresh_labels()
-	pass # Replace with function body.
+	$AnimationPlayer.play_backwards("idle")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
