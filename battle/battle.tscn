@@ -21,39 +21,6 @@ script = ExtResource("1_v0ng5")
 
 [node name="UI" type="CanvasLayer" parent="."]
 
-[node name="BattlerUIActions" type="Control" parent="UI"]
-layout_mode = 3
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 68.0
-grow_horizontal = 2
-size_flags_horizontal = 3
-
-[node name="HBoxContainer" type="HBoxContainer" parent="UI/BattlerUIActions"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -78.0
-offset_top = 11.0
-offset_right = 78.0
-offset_bottom = 42.0
-grow_horizontal = 2
-
-[node name="AttackButton" type="Button" parent="UI/BattlerUIActions/HBoxContainer"]
-layout_mode = 2
-text = "Attack"
-
-[node name="ItemButton" type="Button" parent="UI/BattlerUIActions/HBoxContainer"]
-layout_mode = 2
-disabled = true
-text = "Item"
-
-[node name="RunButton" type="Button" parent="UI/BattlerUIActions/HBoxContainer"]
-layout_mode = 2
-disabled = true
-text = "Run"
-
 [node name="Background" type="Node2D" parent="."]
 
 [node name="Foreground" type="Node2D" parent="."]

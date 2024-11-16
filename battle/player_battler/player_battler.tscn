@@ -20,3 +20,42 @@ stats = SubResource("Resource_28h01")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_hqrjk")
+
+[node name="ActionsUI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = -76.0
+offset_top = -227.0
+offset_right = 78.0
+offset_bottom = -77.0
+grow_horizontal = 2
+size_flags_horizontal = 6
+size_flags_vertical = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ActionsUI"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -78.0
+offset_top = -31.0
+offset_right = 78.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="AttackButton" type="Button" parent="ActionsUI/HBoxContainer"]
+layout_mode = 2
+text = "Attack"
+
+[node name="ItemButton" type="Button" parent="ActionsUI/HBoxContainer"]
+layout_mode = 2
+disabled = true
+text = "Item"
+
+[node name="RunButton" type="Button" parent="ActionsUI/HBoxContainer"]
+layout_mode = 2
+disabled = true
+text = "Run"
