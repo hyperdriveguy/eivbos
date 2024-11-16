@@ -1,8 +1,7 @@
 extends Resource
 class_name battler_stats
 
-@export var max_health: int = 10
-@export var cur_health: int = 10
+@export var health: int = 10
 @export var strength: int = 5
 @export var skill: int = 5
 @export var speed: int = 5
