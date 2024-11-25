@@ -1,7 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://dfvmq53rsquxp"]
+[gd_scene load_steps=20 format=3 uid="uid://dfvmq53rsquxp"]
 
 [ext_resource type="Texture2D" uid="uid://n623w770lwdc" path="res://icon.svg" id="1_hqrjk"]
 [ext_resource type="Script" path="res://battle/player_battler/player_battler.gd" id="1_yrk1p"]
+[ext_resource type="Texture2D" uid="uid://bryss1s56fwx" path="res://battle/player_battler/button-icons.png" id="3_bjvmw"]
 
 [sub_resource type="Animation" id="Animation_30xeb"]
 length = 0.001
@@ -68,44 +69,151 @@ _data = {
 [sub_resource type="LabelSettings" id="LabelSettings_0yir2"]
 font_size = 24
 
-[sub_resource type="LabelSettings" id="LabelSettings_362ut"]
-font_size = 72
-outline_size = 1
-outline_color = Color(0.172833, 0.172833, 0.172833, 1)
-shadow_size = 3
-shadow_color = Color(0.00392157, 0.00392157, 0.00392157, 0.580392)
-shadow_offset = Vector2(2, 1)
+[sub_resource type="AtlasTexture" id="AtlasTexture_cextx"]
+atlas = ExtResource("3_bjvmw")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r2rwu"]
+atlas = ExtResource("3_bjvmw")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tfa3r"]
+atlas = ExtResource("3_bjvmw")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dmn6g"]
+atlas = ExtResource("3_bjvmw")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8lagp"]
+atlas = ExtResource("3_bjvmw")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1but0"]
+atlas = ExtResource("3_bjvmw")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xxfhf"]
+atlas = ExtResource("3_bjvmw")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7makd"]
+atlas = ExtResource("3_bjvmw")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u7u7w"]
+atlas = ExtResource("3_bjvmw")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_b2sj3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cextx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r2rwu")
+}],
+"loop": true,
+"name": &"confirm a",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tfa3r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dmn6g")
+}],
+"loop": true,
+"name": &"confirm b",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8lagp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1but0")
+}],
+"loop": true,
+"name": &"confirm x",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xxfhf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7makd")
+}],
+"loop": true,
+"name": &"confirm y",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u7u7w")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="LabelSettings" id="LabelSettings_k6lqy"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_duvr4"]
 
 [node name="PlayerBattler" type="Node2D"]
 script = ExtResource("1_yrk1p")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-root_node = NodePath("../Sprite2D")
+root_node = NodePath("../BattlerSprite")
 libraries = {
 "": SubResource("AnimationLibrary_oxkq7")
 }
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="BattlerSprite" type="Sprite2D" parent="."]
 position = Vector2(0, -2)
 texture = ExtResource("1_hqrjk")
 
 [node name="HPLabel" type="Label" parent="."]
-offset_left = -94.0
-offset_top = -114.0
-offset_right = 95.0
-offset_bottom = -80.0
+offset_left = -93.0
+offset_top = 76.0
+offset_right = 96.0
+offset_bottom = 110.0
 text = "HP: #"
 label_settings = SubResource("LabelSettings_0yir2")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="ConfirmActionLabel" type="Label" parent="."]
-visible = false
-offset_left = -332.0
-offset_top = -380.0
-offset_right = 336.0
-offset_bottom = -127.0
-text = "Confirm?"
-label_settings = SubResource("LabelSettings_362ut")
-horizontal_alignment = 1
-vertical_alignment = 2
+[node name="ActionIndicator" type="Node2D" parent="."]
+position = Vector2(2, -186)
+scale = Vector2(2, 2)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ActionIndicator"]
+sprite_frames = SubResource("SpriteFrames_b2sj3")
+frame_progress = 0.84343
+
+[node name="AttackLabel" type="Label" parent="ActionIndicator"]
+offset_left = -26.5
+offset_top = 29.0
+offset_right = 23.5
+offset_bottom = 52.0
+text = "Attack"
+label_settings = SubResource("LabelSettings_k6lqy")
+metadata/_edit_use_anchors_ = true
+
+[node name="Skill" type="Label" parent="ActionIndicator"]
+offset_left = 30.5
+offset_top = -10.5
+offset_right = 62.5
+offset_bottom = 12.5
+text = "Skill"
+label_settings = SubResource("LabelSettings_duvr4")
+
+[node name="Label" type="Label" parent="ActionIndicator"]
+offset_left = 30.5
+offset_top = -10.5
+offset_right = 70.5
+offset_bottom = 12.5
