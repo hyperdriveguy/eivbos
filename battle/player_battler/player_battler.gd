@@ -32,10 +32,19 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if is_turn:
 		if input.is_action_just_pressed("attack_battle"):
-			is_turn = false
 			send_attack.emit(temporary_stats.strength)
 			Input.start_joy_vibration(player_input_id,0.3,.1,.13)
-			turn_finished.emit()
+			end_turn()
 
 func _refresh_labels():
 	hp_label.text = "HP: " + str(temporary_stats.health)
+
+func start_turn():
+	is_turn = true
+	$ActionIndicator.visible = true
+
+func end_turn():
+	$ActionIndicator.visible = false
+	is_turn = false
+	turn_finished.emit()
+

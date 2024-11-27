@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://dfvmq53rsquxp"]
+[gd_scene load_steps=21 format=3 uid="uid://dfvmq53rsquxp"]
 
 [ext_resource type="Texture2D" uid="uid://n623w770lwdc" path="res://icon.svg" id="1_hqrjk"]
 [ext_resource type="Script" path="res://battle/player_battler/player_battler.gd" id="1_yrk1p"]
@@ -164,6 +164,8 @@ animations = [{
 
 [sub_resource type="LabelSettings" id="LabelSettings_duvr4"]
 
+[sub_resource type="LabelSettings" id="LabelSettings_b1dte"]
+
 [node name="PlayerBattler" type="Node2D"]
 script = ExtResource("1_yrk1p")
 
@@ -188,12 +190,13 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="ActionIndicator" type="Node2D" parent="."]
+visible = false
 position = Vector2(2, -186)
 scale = Vector2(2, 2)
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="ActionIndicator"]
 sprite_frames = SubResource("SpriteFrames_b2sj3")
-frame_progress = 0.84343
+frame_progress = 0.760763
 
 [node name="AttackLabel" type="Label" parent="ActionIndicator"]
 offset_left = -26.5
@@ -213,7 +216,17 @@ text = "Skill"
 label_settings = SubResource("LabelSettings_duvr4")
 
 [node name="Label" type="Label" parent="ActionIndicator"]
-offset_left = 30.5
+offset_left = -85.5
 offset_top = -10.5
-offset_right = 70.5
+offset_right = -31.5
 offset_bottom = 12.5
+text = "Appeal"
+label_settings = SubResource("LabelSettings_b1dte")
+horizontal_alignment = 2
+
+[node name="Label2" type="Label" parent="ActionIndicator"]
+offset_left = -38.0
+offset_top = -53.5
+offset_right = 36.0
+offset_bottom = -30.5
+text = "Displease"

@@ -16,9 +16,9 @@ func _ready() -> void:
 	print('1: ', _battler1.temporary_stats.speed)
 	if _battler1.temporary_stats.speed > _battler0.temporary_stats.speed:
 		move_child(_battler1, 0)
-		_battler1.is_turn = true
+		_battler1.start_turn()
 	else:
-		_battler0.is_turn = true
+		_battler0.start_turn()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -31,7 +31,7 @@ func _inc_turn():
 	print("cur_turn: ", cur_turn)
 	var cur_battler = get_child(cur_turn)
 	print(cur_battler)
-	cur_battler.is_turn = true
+	cur_battler.start_turn()
 
 func _battler0_sent_attack(damage: int):
 	print("0 hit 1 for ", damage)
