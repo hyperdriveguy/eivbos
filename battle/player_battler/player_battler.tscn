@@ -93,4 +93,5 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="ActionIndicator" parent="." instance=ExtResource("3_ylstq")]
+visible = false
 position = Vector2(2, -186)

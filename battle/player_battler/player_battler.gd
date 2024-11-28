@@ -26,7 +26,10 @@ func _ready() -> void:
 	print("rizz: ", temporary_stats.rizz)
 	_refresh_labels()
 	$AnimationPlayer.play_backwards("idle")
-
+	$ActionIndicator.set_button_labels("Attack", "Skill", "Appeal", "Displease")
+	if player_input_id == -1:
+		$ActionIndicator.is_keyboard = true
+	$ActionIndicator.set_button_animation("idle")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
