@@ -1,0 +1,232 @@
+[gd_scene load_steps=24 format=3 uid="uid://bwbr3g1wydocb"]
+
+[ext_resource type="Script" path="res://battle/player_battler/action_indicator.gd" id="1_rpppr"]
+[ext_resource type="Texture2D" uid="uid://bryss1s56fwx" path="res://battle/player_battler/button-icons.png" id="2_lgju0"]
+[ext_resource type="Texture2D" uid="uid://bvek46xmbryi8" path="res://battle/player_battler/button-icons-keyboard.png" id="3_c4tgp"]
+[ext_resource type="LabelSettings" uid="uid://bm7ljafkx558e" path="res://battle/player_battler/action_indicator_label_settings.tres" id="4_ihvkt"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u7u7w"]
+atlas = ExtResource("2_lgju0")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yfnag"]
+atlas = ExtResource("3_c4tgp")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cextx"]
+atlas = ExtResource("2_lgju0")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r2rwu"]
+atlas = ExtResource("2_lgju0")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tfa3r"]
+atlas = ExtResource("2_lgju0")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dmn6g"]
+atlas = ExtResource("2_lgju0")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8lagp"]
+atlas = ExtResource("2_lgju0")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1but0"]
+atlas = ExtResource("2_lgju0")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xxfhf"]
+atlas = ExtResource("2_lgju0")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7makd"]
+atlas = ExtResource("2_lgju0")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kqp53"]
+atlas = ExtResource("3_c4tgp")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ajo8d"]
+atlas = ExtResource("3_c4tgp")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oyr2t"]
+atlas = ExtResource("3_c4tgp")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qdb5p"]
+atlas = ExtResource("3_c4tgp")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kpf5n"]
+atlas = ExtResource("3_c4tgp")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_svh62"]
+atlas = ExtResource("3_c4tgp")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_so61w"]
+atlas = ExtResource("3_c4tgp")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mxlom"]
+atlas = ExtResource("3_c4tgp")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_b2sj3"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u7u7w")
+}],
+"loop": true,
+"name": &"default joypad",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yfnag")
+}],
+"loop": true,
+"name": &"default keyboard",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cextx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r2rwu")
+}],
+"loop": true,
+"name": &"joy confirm a",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tfa3r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dmn6g")
+}],
+"loop": true,
+"name": &"joy confirm b",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8lagp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1but0")
+}],
+"loop": true,
+"name": &"joy confirm x",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xxfhf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7makd")
+}],
+"loop": true,
+"name": &"joy confirm y",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kqp53")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ajo8d")
+}],
+"loop": true,
+"name": &"key confirm a",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oyr2t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qdb5p")
+}],
+"loop": true,
+"name": &"key confirm q",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kpf5n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_svh62")
+}],
+"loop": true,
+"name": &"key confirm s",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_so61w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mxlom")
+}],
+"loop": true,
+"name": &"key confirm w",
+"speed": 5.0
+}]
+
+[node name="ActionIndicator" type="Node2D"]
+script = ExtResource("1_rpppr")
+
+[node name="ButtonsAnimatedSprite" type="AnimatedSprite2D" parent="."]
+scale = Vector2(2, 2)
+sprite_frames = SubResource("SpriteFrames_b2sj3")
+animation = &"default joypad"
+frame_progress = 0.76411
+
+[node name="PrimaryActionLabel" type="Label" parent="."]
+offset_left = -152.0
+offset_top = 60.0
+offset_right = 140.0
+offset_bottom = 143.0
+text = "Attack"
+label_settings = ExtResource("4_ihvkt")
+horizontal_alignment = 1
+
+[node name="SecondaryActionLabel" type="Label" parent="."]
+offset_left = 56.0
+offset_top = -32.0
+offset_right = 233.0
+offset_bottom = 32.0
+text = "Skill"
+label_settings = ExtResource("4_ihvkt")
+vertical_alignment = 1
+
+[node name="PrimarySpecialLabel" type="Label" parent="."]
+offset_left = -245.0
+offset_top = -29.0
+offset_right = -60.0
+offset_bottom = 32.0
+text = "Appeal"
+label_settings = ExtResource("4_ihvkt")
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="SecondarySpecialLabel" type="Label" parent="."]
+offset_left = -126.0
+offset_top = -119.0
+offset_right = 121.0
+offset_bottom = -60.0
+text = "Displease"
+label_settings = ExtResource("4_ihvkt")
+horizontal_alignment = 1
+vertical_alignment = 2
