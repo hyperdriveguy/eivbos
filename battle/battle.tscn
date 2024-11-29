@@ -38,11 +38,11 @@ script = ExtResource("1_v0ng5")
 [node name="SyncTurnManager" type="Node" parent="Foreground/Interacts"]
 script = ExtResource("1_3wcxc")
 
-[node name="PlayerBattler" parent="Foreground/Interacts/SyncTurnManager" instance=ExtResource("1_3utks")]
+[node name="PlayerBattlerLeft" parent="Foreground/Interacts/SyncTurnManager" groups=["battler_left"] instance=ExtResource("1_3utks")]
 position = Vector2(423, 350)
 permanent_stats = SubResource("Resource_85tpg")
 
-[node name="PlayerBattler2" parent="Foreground/Interacts/SyncTurnManager" instance=ExtResource("1_3utks")]
+[node name="PlayerBattlerRight" parent="Foreground/Interacts/SyncTurnManager" groups=["battler_right"] instance=ExtResource("1_3utks")]
 position = Vector2(1488, 344)
 player_input_id = -1
 permanent_stats = SubResource("Resource_uk5y1")

@@ -1,44 +1,41 @@
 extends Node
 
-@onready var _num_battlers: int = len(get_children())
-@onready var _battler0 = get_child(0)
-@onready var _battler1 = get_child(1)
-
 var cur_turn: int = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	_battler0.send_attack.connect(_battler0_sent_attack)
-	_battler0.turn_finished.connect(_inc_turn)
-	_battler1.send_attack.connect(_battler1_sent_attack)
-	_battler1.turn_finished.connect(_inc_turn)
-	print('0: ', _battler0.temporary_stats.speed)
-	print('1: ', _battler1.temporary_stats.speed)
-	if _battler1.temporary_stats.speed > _battler0.temporary_stats.speed:
-		move_child(_battler1, 0)
-		_battler1.start_turn()
-	else:
-		_battler0.start_turn()
+	_sort_battlers_by_speed()
+	
+	# Connect signals for all battlers
+	for battler in get_children():
+		battler.send_attack.connect(_battler_sent_attack)
+		battler.turn_finished.connect(_end_turn)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+	# Start the first turn
+	get_child(0).start_turn()
 
-func _inc_turn():
-	# The battler that sent the signal is responsible for releasing the turn
-	cur_turn = (cur_turn + 1) % (_num_battlers)
-	print("num_battlers: ", _num_battlers)
-	print("cur_turn: ", cur_turn)
-	var cur_battler = get_child(cur_turn)
-	print(cur_battler)
-	cur_battler.start_turn()
+# Sort and rearrange battlers in the scene tree by speed
+func _sort_battlers_by_speed() -> void:
+	var battlers = get_children()
+	# Sort battlers by speed (descending order)
+	battlers.sort_custom(_compare_speed)
+	# Reorder children using move_child
+	for i in range(battlers.size()):
+		move_child(battlers[i], i)
 
-func _battler0_sent_attack(damage: int):
-	print("0 hit 1 for ", damage)
-	_battler1.temporary_stats.health -= damage
-	_battler1._refresh_labels()
+func _compare_speed(a, b) -> bool:
+	return a.temporary_stats.speed > b.temporary_stats.speed
 
-func _battler1_sent_attack(damage: int):
-	print("1 hit 0 for ", damage)
-	_battler0.temporary_stats.health -= damage
-	_battler0._refresh_labels()
+# Handle the end of a turn
+func _end_turn() -> void:
+	# Move the current battler (index 0) to the last position
+	move_child(get_child(0), get_child_count() - 1)
+	# Start the next battler's turn
+	get_child(0).start_turn()
+
+# Handle an attack from a battler
+func _battler_sent_attack(damage: int, target_index: int) -> void:
+	var target = get_child(target_index)
+	print("%s hit %s for %d damage" % [get_child(0).name, target.name, damage])
+	target.temporary_stats.health -= damage
+	target._refresh_labels()
