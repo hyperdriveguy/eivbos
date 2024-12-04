@@ -21,12 +21,14 @@ func _ready() -> void:
 	var devices = Input.get_connected_joypads()
 	# also consider keyboard player
 	devices.append(-1)
-	print(devices)
+	print("Devices: ", devices)
 
-	input = DeviceInput.new(player_input_id)
 	print("rizz: ", current_stats.rizz)
 	_refresh_labels()
-	$AnimationPlayer.play_backwards("idle")
+	$AnimationPlayer.play("idle")
+
+	# Initialize button hints
+	$ActionIndicator.input_dev = DeviceInput.new(player_input_id)
 	$ActionIndicator.set_button_labels("Attack", "Skill", "Appeal", "Displease")
 	if player_input_id == -1:
 		$ActionIndicator.is_keyboard = true
@@ -45,10 +47,10 @@ func _refresh_labels():
 
 func start_turn():
 	is_turn = true
-	$ActionIndicator.visible = true
+	$ActionIndicator.enable()
 
 func end_turn():
-	$ActionIndicator.visible = false
+	$ActionIndicator.disable()
 	is_turn = false
 	turn_finished.emit()
 

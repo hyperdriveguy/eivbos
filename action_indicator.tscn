@@ -13,14 +13,6 @@ region = Rect2(0, 0, 64, 64)
 atlas = ExtResource("2_lgju0")
 region = Rect2(256, 0, 64, 64)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_tfa3r"]
-atlas = ExtResource("2_lgju0")
-region = Rect2(0, 0, 64, 64)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_dmn6g"]
-atlas = ExtResource("2_lgju0")
-region = Rect2(192, 0, 64, 64)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_8lagp"]
 atlas = ExtResource("2_lgju0")
 region = Rect2(0, 0, 64, 64)
@@ -28,6 +20,14 @@ region = Rect2(0, 0, 64, 64)
 [sub_resource type="AtlasTexture" id="AtlasTexture_1but0"]
 atlas = ExtResource("2_lgju0")
 region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tfa3r"]
+atlas = ExtResource("2_lgju0")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dmn6g"]
+atlas = ExtResource("2_lgju0")
+region = Rect2(192, 0, 64, 64)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_xxfhf"]
 atlas = ExtResource("2_lgju0")
@@ -87,18 +87,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_r2rwu")
 }],
 "loop": true,
-"name": &"joy confirm a",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_tfa3r")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_dmn6g")
-}],
-"loop": true,
-"name": &"joy confirm b",
+"name": &"joy confirm primary action",
 "speed": 5.0
 }, {
 "frames": [{
@@ -109,7 +98,18 @@ animations = [{
 "texture": SubResource("AtlasTexture_1but0")
 }],
 "loop": true,
-"name": &"joy confirm x",
+"name": &"joy confirm primary special",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tfa3r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dmn6g")
+}],
+"loop": true,
+"name": &"joy confirm secondary action",
 "speed": 5.0
 }, {
 "frames": [{
@@ -120,7 +120,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_7makd")
 }],
 "loop": true,
-"name": &"joy confirm y",
+"name": &"joy confirm secondary special",
 "speed": 5.0
 }, {
 "frames": [{
@@ -139,7 +139,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_ajo8d")
 }],
 "loop": true,
-"name": &"key confirm a",
+"name": &"key confirm primary action",
 "speed": 5.0
 }, {
 "frames": [{
@@ -150,7 +150,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_qdb5p")
 }],
 "loop": true,
-"name": &"key confirm q",
+"name": &"key confirm primary special",
 "speed": 5.0
 }, {
 "frames": [{
@@ -161,7 +161,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_svh62")
 }],
 "loop": true,
-"name": &"key confirm s",
+"name": &"key confirm secondary action",
 "speed": 5.0
 }, {
 "frames": [{
@@ -172,7 +172,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_mxlom")
 }],
 "loop": true,
-"name": &"key confirm w",
+"name": &"key confirm secondary special",
 "speed": 5.0
 }, {
 "frames": [{
@@ -190,7 +190,7 @@ script = ExtResource("1_rpppr")
 [node name="ButtonsAnimatedSprite" type="AnimatedSprite2D" parent="."]
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_b2sj3")
-animation = &"joy idle"
+animation = &"key confirm secondary special"
 
 [node name="PrimaryActionLabel" type="Label" parent="."]
 offset_left = -152.0
