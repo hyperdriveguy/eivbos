@@ -30,17 +30,15 @@ func _ready() -> void:
 	# Initialize button hints
 	$ActionIndicator.input_dev = DeviceInput.new(player_input_id)
 	$ActionIndicator.set_button_labels("Attack", "Skill", "Appeal", "Displease")
-	if player_input_id == -1:
-		$ActionIndicator.is_keyboard = true
 	$ActionIndicator.set_button_animation("idle")
+	$ActionIndicator.primary_action_fire.connect(_attack_action)
+	$ActionIndicator.secondary_action_fire.connect(_attack_action)
+	$ActionIndicator.primary_special_fire.connect(_attack_action)
+	$ActionIndicator.secondary_special_fire.connect(_attack_action)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	if is_turn:
-		if input.is_action_just_pressed("attack_battle"):
-			send_attack.emit(current_stats.strength, -1)
-			Input.start_joy_vibration(player_input_id,0.3,.1,.13)
-			end_turn()
+	pass
 
 func _refresh_labels():
 	hp_label.text = "HP: " + str(current_stats.health) + "/" + str(permanent_stats.health)
@@ -61,3 +59,8 @@ func damage(raw_damage: int):
 		current_stats.health = 0
 		defeat.emit()
 	_refresh_labels()
+
+func _attack_action():
+	send_attack.emit(current_stats.strength, -1)
+	Input.start_joy_vibration(player_input_id,0.3,.1,.13)
+	end_turn()
