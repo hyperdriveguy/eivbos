@@ -29,12 +29,33 @@ func _ready() -> void:
 
 	# Initialize button hints
 	$ActionIndicator.input_dev = DeviceInput.new(player_input_id)
+	_main_menu()
+
+func _disconnect_actions():
+	$ActionIndicator.primary_action_fire.disconnect(_attack_action)
+	$ActionIndicator.secondary_action_fire.disconnect(_attack_action)
+	$ActionIndicator.primary_special_fire.disconnect(_attack_action)
+	$ActionIndicator.secondary_special_fire.disconnect(_attack_action)
+
+func _main_menu():
 	$ActionIndicator.set_button_labels("Attack", "Skill", "Appeal", "Displease")
 	$ActionIndicator.set_button_animation("idle")
 	$ActionIndicator.primary_action_fire.connect(_attack_action)
-	$ActionIndicator.secondary_action_fire.connect(_attack_action)
+	$ActionIndicator.secondary_action_fire.connect(_skill_action)
 	$ActionIndicator.primary_special_fire.connect(_attack_action)
 	$ActionIndicator.secondary_special_fire.connect(_attack_action)
+
+func _skills_menu():
+	$ActionIndicator.set_button_labels("Skill 1", "Skill 2", "<- Back", "Skill 3")
+	$ActionIndicator.set_button_animation("idle")
+	# $ActionIndicator.primary_action_fire.connect()
+	# $ActionIndicator.secondary_action_fire.connect()
+	$ActionIndicator.primary_special_fire.connect(_return_to_main_menu)
+	# $ActionIndicator.secondary_special_fire.connect()
+
+func _return_to_main_menu():
+	_disconnect_actions()
+	_main_menu()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
@@ -64,3 +85,7 @@ func _attack_action():
 	send_attack.emit(current_stats.strength, -1)
 	Input.start_joy_vibration(player_input_id,0.3,.1,.13)
 	end_turn()
+
+func _skill_action():
+	_disconnect_actions()
+	_skills_menu()
