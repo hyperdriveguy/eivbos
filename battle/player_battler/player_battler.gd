@@ -8,6 +8,8 @@ signal defeat
 @export var player_input_id: int
 @export var permanent_stats: battler_stats
 
+@export var skillset: Array[battler_skill]
+
 @onready var current_stats: battler_stats = permanent_stats.duplicate()
 @onready var hp_label: Label = $HPLabel
 
@@ -95,3 +97,6 @@ func _attack_action():
 func _skill_menu_action():
 	_disconnect_actions()
 	_skills_menu()
+
+func _activate_skill(skill: battler_skill):
+	skill.activate()
