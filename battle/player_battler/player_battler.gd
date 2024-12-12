@@ -31,17 +31,21 @@ func _ready() -> void:
 	$ActionIndicator.input_dev = DeviceInput.new(player_input_id)
 	_main_menu()
 
+func _obliterate_signal_bind(sig: Signal):
+	for conn in sig.get_connections():
+		sig.disconnect(conn.callable)
+
 func _disconnect_actions():
-	$ActionIndicator.primary_action_fire.disconnect(_attack_action)
-	$ActionIndicator.secondary_action_fire.disconnect(_attack_action)
-	$ActionIndicator.primary_special_fire.disconnect(_attack_action)
-	$ActionIndicator.secondary_special_fire.disconnect(_attack_action)
+	_obliterate_signal_bind($ActionIndicator.primary_action_fire)
+	_obliterate_signal_bind($ActionIndicator.secondary_action_fire)
+	_obliterate_signal_bind($ActionIndicator.primary_special_fire)
+	_obliterate_signal_bind($ActionIndicator.secondary_special_fire)
 
 func _main_menu():
 	$ActionIndicator.set_button_labels("Attack", "Skill", "Appeal", "Displease")
 	$ActionIndicator.set_button_animation("idle")
 	$ActionIndicator.primary_action_fire.connect(_attack_action)
-	$ActionIndicator.secondary_action_fire.connect(_skill_action)
+	$ActionIndicator.secondary_action_fire.connect(_skill_menu_action)
 	$ActionIndicator.primary_special_fire.connect(_attack_action)
 	$ActionIndicator.secondary_special_fire.connect(_attack_action)
 
@@ -52,10 +56,12 @@ func _skills_menu():
 	# $ActionIndicator.secondary_action_fire.connect()
 	$ActionIndicator.primary_special_fire.connect(_return_to_main_menu)
 	# $ActionIndicator.secondary_special_fire.connect()
+	$ActionIndicator.enable()
 
 func _return_to_main_menu():
 	_disconnect_actions()
 	_main_menu()
+	$ActionIndicator.enable()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
@@ -86,6 +92,6 @@ func _attack_action():
 	Input.start_joy_vibration(player_input_id,0.3,.1,.13)
 	end_turn()
 
-func _skill_action():
+func _skill_menu_action():
 	_disconnect_actions()
 	_skills_menu()
