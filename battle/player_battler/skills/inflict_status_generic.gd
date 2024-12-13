@@ -1,8 +1,8 @@
 extends battler_skill
 class_name status_inflicter
 
-@export var effect: String
-@export var intensity: float = 0.5
+@export var effect: status_effect_applier.effects
+@export var dosage: float = 20
 
 func activate():
-    return ["status", effect, intensity]
+    pass

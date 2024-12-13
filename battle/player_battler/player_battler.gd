@@ -5,10 +5,11 @@ signal send_attack(damage: int, target: int)
 signal turn_finished
 signal defeat
 
+@export var right_sided: bool = false
 @export var player_input_id: int
 @export var permanent_stats: battler_stats
 
-@export var skillset: Array[battler_skill]
+@export var skillset: Array[battler_skill] = [null, null, null]
 
 @onready var current_stats: battler_stats = permanent_stats.duplicate()
 @onready var hp_label: Label = $HPLabel
@@ -20,6 +21,8 @@ var input
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	if right_sided:
+		$BattlerSprite.flip_h = true
 	var devices = Input.get_connected_joypads()
 	# also consider keyboard player
 	devices.append(-1)

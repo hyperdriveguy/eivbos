@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://dfvmq53rsquxp"]
 
-[ext_resource type="Texture2D" uid="uid://n623w770lwdc" path="res://icon.svg" id="1_hqrjk"]
 [ext_resource type="Script" path="res://battle/player_battler/player_battler.gd" id="1_yrk1p"]
+[ext_resource type="Texture2D" uid="uid://bye4ms3y15rnw" path="res://battle/player_battler/person.png" id="2_gufpl"]
 [ext_resource type="PackedScene" uid="uid://bwbr3g1wydocb" path="res://action_indicator.tscn" id="3_ylstq"]
 
 [sub_resource type="Animation" id="Animation_30xeb"]
@@ -80,7 +80,8 @@ libraries = {
 
 [node name="BattlerSprite" type="Sprite2D" parent="."]
 position = Vector2(0, -2)
-texture = ExtResource("1_hqrjk")
+scale = Vector2(5, 5)
+texture = ExtResource("2_gufpl")
 
 [node name="HPLabel" type="Label" parent="."]
 offset_left = -93.0
