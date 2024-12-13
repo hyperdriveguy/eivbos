@@ -3,7 +3,7 @@ class_name status_effect_applier
 
 enum effects {POISON, REGENERATION, STIMULANT, BREATH_MINT, DROWSY, LAXATIVE}
 
-@export var stimulant_inertia: int = 3
+@export var stimulant_inertia: int = 10
 
 var concentrations: Array[float]
 var concentrations_in: Array[float]
@@ -24,7 +24,7 @@ func _ready() -> void:
         concentrations.append(0)
         concentrations_in.append(0)
 
-func update_concentrations(flow: float, volume: float, delta: float = 1) -> void:
+func update_concentrations(flow: float, volume: float, delta: int=1) -> void:
     """
     Updates the concentrations for all effect types using the mixing equation.
 
@@ -190,12 +190,13 @@ func apply_stimulation(strength: int, speed: int, awareness: int, delta: int=1) 
     Returns:
         Dictionary: Contains the updated values for strength, speed, and awareness.
     """
-    var stim_restore = concentrations[effects.STIMULANT]
+    var stim_restore = 10
+    var forcing = concentrations[effects.STIMULANT]
     var crit_damping = _critical_damp_point(stimulant_inertia, stim_restore)
     # Apply RLC circuit for stimulation to all stats
-    var strength_and_prime = _rlc_circuit(strength, strength_prime, stimulant_inertia, crit_damping + stim_restore, stim_restore, 0, delta)
-    var speed_and_prime = _rlc_circuit(speed, speed_prime, stimulant_inertia, crit_damping, stim_restore, 0, delta)
-    var awareness_and_prime = _rlc_circuit(awareness, awareness_prime, stimulant_inertia, crit_damping - stim_restore, stim_restore, 0, delta)
+    var strength_and_prime = _rlc_circuit(strength, strength_prime, stimulant_inertia, crit_damping + stim_restore, stim_restore, forcing, delta)
+    var speed_and_prime = _rlc_circuit(speed, speed_prime, stimulant_inertia, crit_damping, stim_restore, forcing, delta)
+    var awareness_and_prime = _rlc_circuit(awareness, awareness_prime, stimulant_inertia, crit_damping - stim_restore, stim_restore, forcing, delta)
 
     return {"strength": roundi(strength_and_prime[0]), "speed": roundi(speed_and_prime[0]), "awareness": roundi(awareness_and_prime[0])}
 
@@ -236,4 +237,21 @@ func apply_laxative(flushability: int, delta: int=1) -> int:
     Returns:
         int: The updated flushability value.
     """
-    return roundi(_multipler_if_significant(flushability, effects.LAXATIVE, 1))
+    return roundi(_multipler_if_significant(flushability, effects.LAXATIVE, 0.25))
+
+# Apply all Euler's method steps
+func update_stats_status(cur_stats: battler_stats, perm_stats: battler_stats, delta: int=1):
+    update_concentrations(cur_stats.flushability, cur_stats.status_tank, delta)
+    cur_stats.health = apply_poison(cur_stats.health, delta)
+    cur_stats.health = apply_regen(cur_stats.health, perm_stats.health, delta)
+    cur_stats.speed = apply_drowsy(cur_stats.speed, delta)
+
+    var stim_dict = apply_stimulation(cur_stats.strength, cur_stats.speed, cur_stats.awareness, delta)
+    cur_stats.strength = stim_dict["strength"]
+    cur_stats.speed = stim_dict["speed"]
+    cur_stats.awareness = stim_dict["awareness"]
+
+    cur_stats.rizz = apply_breath_mint(perm_stats.rizz, delta)
+    cur_stats.flushability = apply_laxative(cur_stats.flushability, delta)
+
+    return cur_stats

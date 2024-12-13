@@ -84,6 +84,7 @@ func start_turn():
 func end_turn():
 	$ActionIndicator.disable()
 	is_turn = false
+	current_stats = status_applier.update_stats_status(current_stats, permanent_stats)
 	turn_finished.emit()
 
 func damage(raw_damage: int):
