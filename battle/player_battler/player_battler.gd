@@ -14,6 +14,8 @@ signal defeat
 @onready var current_stats: battler_stats = permanent_stats.duplicate()
 @onready var hp_label: Label = $HPLabel
 
+var status_applier: status_effect_applier = status_effect_applier.new()
+
 var is_turn = false
 var input
 

@@ -3,6 +3,8 @@ class_name status_effect_applier
 
 enum effects {POISON, REGENERATION, STIMULANT, BREATH_MINT, DROWSY, LAXATIVE}
 
+@export var stimulant_inertia: int = 3
+
 var concentrations: Array[float]
 var concentrations_in: Array[float]
 
@@ -77,7 +79,19 @@ func modify_concentration_in(eff: effects, con: float) -> void:
 
 # Application strategies
 
-func _newtons_law_of_cooling(stat: float, approach: int, eff: effects, delta: int=1):
+func _newtons_law_of_cooling(stat: float, approach: int, eff: effects, delta: int=1) -> float:
+    """
+    Models the effect of concentration changes on a system based on Newton's law of cooling.
+    
+    Args:
+        stat (float): The current state value to update (e.g., health or strength).
+        approach (int): The value the stat approaches over time (e.g., max health or target value).
+        eff (effects): The status effect being applied (used for concentration).
+        delta (int, optional): The time step for the update. Defaults to 1.
+
+    Returns:
+        float: The updated state value.
+    """
     return stat + delta * concentrations[eff] * (approach - stat)
 
 func _rlc_circuit(stat: float, change_in_stat: float, inertia: float, damper: float, restorer: float, external_force: float, delta: float = 1.0) -> Array:
@@ -96,9 +110,9 @@ func _rlc_circuit(stat: float, change_in_stat: float, inertia: float, damper: fl
         Array: A regular array containing the updated `stat` (charge) and `q_prime` (current).
 
     Raises:
-        ValueError: If `inertia` is zero, as it would cause a division by zero in the calculations.
+        Assertion: If `inertia` is zero, as it would cause a division by zero in the calculations.
     """
-    assert(inertia == 0.0, "Inertia (inductance) must be non-zero to avoid division by zero.")
+    assert(inertia != 0.0, "Inertia (inductance) must be non-zero to avoid division by zero.")
 
     # Derivatives (q' and q'') for the system
     var q_prime = change_in_stat
@@ -110,7 +124,22 @@ func _rlc_circuit(stat: float, change_in_stat: float, inertia: float, damper: fl
 
     return [stat, q_prime]
 
-func _multipler_if_significant(stat: float, eff: effects, significance: float):
+## Application helper for RLC
+func _critical_damp_point(inertia: float, restorer: float):
+    return sqrt(4 * inertia * restorer)
+
+func _multipler_if_significant(stat: float, eff: effects, significance: float) -> float:
+    """
+    Modifies a stat based on the concentration of a specific effect if it exceeds a threshold.
+
+    Args:
+        stat (float): The stat to be modified (e.g., health, strength).
+        eff (effects): The status effect applied (e.g., POISON).
+        significance (float): The concentration threshold for modification.
+
+    Returns:
+        float: The modified stat value.
+    """
     if concentrations[eff] > significance:
         return stat * (concentrations[eff] / significance)
     return stat
@@ -118,8 +147,93 @@ func _multipler_if_significant(stat: float, eff: effects, significance: float):
 # Apply individual effects
 
 func apply_poison(health: int, delta: int=1) -> int:
+    """
+    Applies poison effect to health based on the current poison concentration.
+
+    Args:
+        health (int): The current health of the entity.
+        delta (int, optional): The time step. Defaults to 1.
+
+    Returns:
+        int: The updated health value.
+    """
     return roundi(_newtons_law_of_cooling(health, 0, effects.POISON, delta))
 
-func apply_regen(health: int, max_health: int, delta: int=1):
+func apply_regen(health: int, max_health: int, delta: int=1) -> int:
+    """
+    Applies regeneration effect to health based on the current regeneration concentration.
+
+    Args:
+        health (int): The current health of the entity.
+        max_health (int): The maximum health of the entity.
+        delta (int, optional): The time step. Defaults to 1.
+
+    Returns:
+        int: The updated health value.
+    """
     return roundi(_newtons_law_of_cooling(health, max_health, effects.REGENERATION, delta))
 
+# Save between application
+var strength_prime = 0
+var speed_prime = 0
+var awareness_prime = 0
+func apply_stimulation(strength: int, speed: int, awareness: int, delta: int=1) -> Dictionary:
+    """
+    Applies stimulant effects to various stats (strength, speed, awareness) using RLC circuit model.
+
+    Args:
+        strength (int): The current strength of the entity.
+        speed (int): The current speed of the entity.
+        awareness (int): The current awareness of the entity.
+        delta (int, optional): The time step. Defaults to 1.
+
+    Returns:
+        Dictionary: Contains the updated values for strength, speed, and awareness.
+    """
+    var stim_restore = concentrations[effects.STIMULANT]
+    var crit_damping = _critical_damp_point(stimulant_inertia, stim_restore)
+    # Apply RLC circuit for stimulation to all stats
+    var strength_and_prime = _rlc_circuit(strength, strength_prime, stimulant_inertia, crit_damping + stim_restore, stim_restore, 0, delta)
+    var speed_and_prime = _rlc_circuit(speed, speed_prime, stimulant_inertia, crit_damping, stim_restore, 0, delta)
+    var awareness_and_prime = _rlc_circuit(awareness, awareness_prime, stimulant_inertia, crit_damping - stim_restore, stim_restore, 0, delta)
+
+    return {"strength": roundi(strength_and_prime[0]), "speed": roundi(speed_and_prime[0]), "awareness": roundi(awareness_and_prime[0])}
+
+func apply_breath_mint(rizz: int, delta: int=1) -> int:
+    """
+    Applies breath mint effect to rizz based on the current concentration using multiplier if significant.
+
+    Args:
+        rizz (int): The current rizz value.
+        delta (int, optional): The time step. Defaults to 1.
+
+    Returns:
+        int: The updated rizz value.
+    """
+    return roundi(_multipler_if_significant(rizz, effects.BREATH_MINT, 0.5))
+
+func apply_drowsy(speed: int, delta: int=1) -> int:
+    """
+    Applies drowsy effect to speed, reducing it based on the current concentration.
+
+    Args:
+        speed (int): The current speed of the entity.
+        delta (int, optional): The time step. Defaults to 1.
+
+    Returns:
+        int: The updated speed value.
+    """
+    return roundi(_newtons_law_of_cooling(speed, 0, effects.DROWSY, delta))
+
+func apply_laxative(flushability: int, delta: int=1) -> int:
+    """
+    Applies laxative effect to flushability based on the current concentration.
+
+    Args:
+        flushability (int): The current flushability value.
+        delta (int, optional): The time step. Defaults to 1.
+
+    Returns:
+        int: The updated flushability value.
+    """
+    return roundi(_multipler_if_significant(flushability, effects.LAXATIVE, 1))

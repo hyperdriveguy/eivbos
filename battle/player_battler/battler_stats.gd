@@ -11,7 +11,6 @@ class_name battler_stats
 @export var rizz: int = 5
 
 # Status effect application
-var status_applier: status_effect_applier = status_effect_applier.new()
 @export var flushability: int = 1
 @export var status_tank: int = 5
 
